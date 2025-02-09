@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import Link from "next/link";
+import EditablePost from "./editablePost";
 
 export default async function AllPosts() {
   const posts = await prisma.post.findMany({
@@ -15,20 +15,7 @@ export default async function AllPosts() {
       </h1>
       <ul className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-4">
         {posts.map((post) => (
-          <li key={post.id}>
-            <Link
-              href={`/posts/${post.id}`}
-              className="text-blue-500 hover:underline bg-gray-50 hover:bg-gray-100 rounded-lg p-4 flex flex-col w-96"
-            >
-              <span className="text-sm text-gray-600">
-                Author: {post.author.name}
-              </span>
-              <span className="font-semibold">Title: {post.title}</span>
-              <span className="font-semibold">
-                Published: {post.published.toString()}
-              </span>
-            </Link>
-          </li>
+          <EditablePost key={post.id} post={post} />
         ))}
       </ul>
     </div>
