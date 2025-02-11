@@ -1,34 +1,36 @@
 import Form from "next/form";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { createItemAction } from "@/app/actions";
 
 export default function NewPost() {
-  async function createPost(formData: FormData) {
-    "use server";
+  // Unlike FormPost (a client component), I can do this here since this is a server component.
+  // async function createPost(formData: FormData) {
+  //   "use server";
 
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
-    const published = formData.get("publish") as string;
+  //   const title = formData.get("title") as string;
+  //   const content = formData.get("content") as string;
+  //   const published = formData.get("publish") as string;
 
-    await prisma.post.create({
-      data: {
-        title,
-        content,
-        authorId: 1,
-        published: published === "true",
-      },
-    });
+  //   await prisma.post.create({
+  //     data: {
+  //       title,
+  //       content,
+  //       authorId: 1,
+  //       published: published === "true",
+  //     },
+  //   });
 
-    revalidatePath("/");
-    revalidatePath("/posts");
-  }
+  //   revalidatePath("/");
+  //   revalidatePath("/posts");
+  // }
 
   return (
     <div className="mx-auto max-w-[1500px] p-4">
       <h1 className="text-4xl font-bold mb-4 font-[family-name:var(--font-geist-sans)] text-[#333333]">
         Create New Post
       </h1>
-      <Form action={createPost} className="max-w-2xl space-y-6">
+      <Form action={createItemAction} className="max-w-2xl space-y-6">
         <div>
           <label htmlFor="title" className="block text-lg mb-2">
             Title

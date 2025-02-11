@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request: Request): Promise<NextResponse> {
@@ -16,6 +17,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
       },
     });
 
+    revalidatePath("/");
     return NextResponse.json(response);
   } catch (error) {
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });

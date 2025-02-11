@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import EditablePost from "./editablePost";
+import Post from "./post";
 
 export default async function AllPosts() {
   const posts = await prisma.post.findMany({
@@ -15,7 +15,7 @@ export default async function AllPosts() {
       </h1>
       <ul className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-4">
         {posts.map((post) => (
-          <EditablePost key={post.id} post={post} />
+          <Post key={post.id} post={post} />
         ))}
       </ul>
     </div>
