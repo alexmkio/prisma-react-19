@@ -1,36 +1,32 @@
-"use client";
-
+import { updateItemAction } from "@/app/actions";
 import Form from "next/form";
-import { createItemAction } from "@/app/actions";
 import { useActionState } from "react";
+import { PostType } from "@/types";
 import { SubmitButton } from "./submitButton";
+import clsx from "clsx";
 
-export default function NewPost() {
-  // Unlike FormPost (a client component), I can do this here since this is a server component.
-  // async function createPost(formData: FormData) {
-  //   "use server";
+type EditablePostProps = {
+  item: PostType;
+  updateOptimistic: (post: FormData) => void;
+};
 
-  //   const title = formData.get("title") as string;
-  //   const content = formData.get("content") as string;
-  //   const published = formData.get("publish") as string;
+export default function PostEditor({
+  item,
+  updateOptimistic,
+}: EditablePostProps) {
+  // Before using useTransition
+  // const [isPending, startTransition] = useTransition();
 
-  //   await prisma.post.create({
-  //     data: {
-  //       title,
-  //       content,
-  //       authorId: 1,
-  //       published: published === "true",
-  //     },
+  // const handleUpdate = (formData: FormData) => {
+  //   startTransition(async () => {
+  //     await updateItemAction(formData);
   //   });
+  // };
 
-  //   revalidatePath("/");
-  //   revalidatePath("/posts");
-  // }
-
-  // After using useActionState
   const [error, formAction, isPending] = useActionState(
     async (_prevState: any, formData: FormData) => {
-      const result = await createItemAction(formData);
+      updateOptimistic(formData);
+      const result = await updateItemAction(formData);
       if (!result.success) {
         return result.error;
       }
@@ -40,13 +36,19 @@ export default function NewPost() {
   );
 
   return (
-    <div className="mx-auto max-w-[1500px] p-4">
-      <h1 className="text-4xl font-bold mb-4 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-        Create New Post
-      </h1>
-      {isPending && <p>Creating...</p>}
-      {error && <p>{error}</p>}
-      <Form action={formAction} className="max-w-2xl space-y-6">
+    <li
+      key={item?.id}
+      className={clsx(
+        "text-blue-500 rounded-lg p-4 flex flex-col w-96 relative",
+        isPending
+          ? "bg-red-500 hover:bg-red-600"
+          : "bg-gray-50 hover:bg-gray-100"
+      )}
+    >
+      <Form action={formAction} className="">
+        {isPending && <p className="text-white text-lg">Updating...</p>}
+        {error && <p>{error}</p>}
+        <input type="hidden" name="id" value={item?.id} />
         <div>
           <label htmlFor="title" className="block text-lg mb-2">
             Title
@@ -56,6 +58,7 @@ export default function NewPost() {
             id="title"
             name="title"
             placeholder="Enter your post title"
+            defaultValue={item?.title}
             className="w-full px-4 py-2 border rounded-lg"
           />
         </div>
@@ -68,6 +71,7 @@ export default function NewPost() {
             name="content"
             placeholder="Write your post content here..."
             rows={6}
+            defaultValue={item?.content ?? ""}
             className="w-full px-4 py-2 border rounded-lg"
           />
         </div>
@@ -79,6 +83,7 @@ export default function NewPost() {
                 type="radio"
                 name="publish"
                 value="true"
+                defaultChecked={item?.published === true}
                 className="mr-2"
               />
               Yes
@@ -88,6 +93,7 @@ export default function NewPost() {
                 type="radio"
                 name="publish"
                 value="false"
+                defaultChecked={item?.published === false}
                 className="mr-2"
               />
               No
@@ -96,6 +102,6 @@ export default function NewPost() {
         </div>
         <SubmitButton className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600" />
       </Form>
-    </div>
+    </li>
   );
 }

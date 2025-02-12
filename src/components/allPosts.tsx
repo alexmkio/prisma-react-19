@@ -2,18 +2,20 @@
 
 import { useActionState, useOptimistic, useState } from "react";
 import { PostType } from "@/types";
-import EditablePost from "./editablePost";
-import DeletablePost from "./deletablePost";
+import EditablePost from "./postEditor";
+import DeletablePost from "./postDisplay";
 import Link from "next/link";
 import { updateItemAction } from "@/app/actions";
+import PostsDisplay from "./postDisplay";
+import PostsEditor from "./postEditor";
+import PostDisplay from "./postDisplay";
+import PostEditor from "./postEditor";
 
 type AllPostProps = {
   posts: PostType[];
 };
 
-export default async function AllPosts({ posts }: AllPostProps) {
-  const [isEditing, setIsEditing] = useState(false);
-
+export default function AllPosts({ posts }: AllPostProps) {
   const [optimisticState, updateOptimistic] = useOptimistic(
     posts,
     (state, updatedPost: FormData) => {
@@ -32,70 +34,29 @@ export default async function AllPosts({ posts }: AllPostProps) {
     }
   );
 
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
-      updateOptimistic(formData);
-      const result = await updateItemAction(formData);
-      if (!result.success) {
-        return result.error;
-      }
-      setIsEditing(false);
-      return null;
-    },
-    null
-  );
-
   return (
     <>
       <div className="mx-auto max-w-[1500px] p-4">
         <h1 className="text-4xl font-bold mb-4 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-          All Posts
+          Update
         </h1>
         <ul className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-4">
-          {optimisticState.map((post) => (
-            <li
-              key={post.id}
-              className="text-blue-500 bg-gray-50 hover:bg-gray-100 rounded-lg p-4 flex flex-col w-96 relative"
-            >
-              <button onClick={() => setIsEditing(!isEditing)}>
-                {isEditing ? "Done" : "Edit"}
-              </button>
-              {isEditing ? (
-                <EditablePost
-                  post={post}
-                  setIsEditing={setIsEditing}
-                  updateOptimisticPost={updateOptimistic}
-                  error={error}
-                  formAction={formAction}
-                  isPending={isPending}
-                />
-              ) : (
-                <DeletablePost post={post} />
-              )}
-            </li>
+          {optimisticState.map((item) => (
+            <PostEditor
+              key={item.id}
+              item={item}
+              updateOptimistic={updateOptimistic}
+            />
           ))}
         </ul>
       </div>
       <div className="mx-auto max-w-[1500px] p-4">
         <h1 className="text-4xl font-bold mb-4 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-          Published Posts
+          Delete
         </h1>
         <ul className="font-[family-name:var(--font-geist-sans)] flex flex-wrap gap-4">
-          {optimisticState.map((post) => (
-            <li key={post.id}>
-              <Link
-                href={`/posts/${post.id}`}
-                className="text-blue-500 hover:underline bg-gray-50 hover:bg-gray-100 rounded-lg p-4 flex flex-col w-96"
-              >
-                <span className="text-sm text-gray-600">
-                  Author: {post.author.name}
-                </span>
-                <span className="font-semibold">Title: {post.title}</span>
-                <span className="font-semibold">
-                  Published: {post.published.toString()}
-                </span>
-              </Link>
-            </li>
+          {optimisticState.map((item) => (
+            <PostDisplay key={item.id} item={item} />
           ))}
         </ul>
       </div>

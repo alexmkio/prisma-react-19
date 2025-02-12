@@ -1,5 +1,5 @@
 import AllPosts from "@/components/allPosts";
-import NewPost from "@/components/newPost";
+import PostCreator from "@/components/postCreator";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
@@ -12,7 +12,7 @@ export default async function Home() {
   return (
     <>
       <AllPosts posts={posts} />
-      <NewPost />
+      <PostCreator />
     </>
   );
 }
