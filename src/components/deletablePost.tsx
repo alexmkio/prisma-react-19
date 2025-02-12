@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import XMark from "@/icons/xMark";
 import { Post, User } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import { deleteItemAction } from "@/app/actions";
 
 export default function DeletablePost({

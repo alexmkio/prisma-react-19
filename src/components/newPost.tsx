@@ -1,7 +1,5 @@
 "use client";
 import Form from "next/form";
-import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 import { createItemAction } from "@/app/actions";
 import { useActionState } from "react";
 import { SubmitButton } from "./submitButton";

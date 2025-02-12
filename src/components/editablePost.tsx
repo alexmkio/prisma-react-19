@@ -1,8 +1,6 @@
 import { updateItemAction } from "@/app/actions";
-import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 import Form from "next/form";
-import { useActionState, useTransition } from "react";
+import { useActionState } from "react";
 import { PostType } from "@/types";
 import { SubmitButton } from "./submitButton";
 
