@@ -95,12 +95,7 @@ export default function NewPost() {
             </label>
           </div>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
-        >
-          Create Post
-        </button>
+        <SubmitButton className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600" />
       </Form>
     </div>
   );
