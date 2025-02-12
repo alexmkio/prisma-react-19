@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { updateItemAction } from "@/app/actions";
 import Form from "next/form";
@@ -13,6 +13,34 @@ type EditablePostProps = {
   error: string | null | undefined;
   formAction: (payload: FormData) => void;
   isPending: boolean;
+};
+
+export const EditablePostForm = (
+  props: Pick<
+    EditablePostProps,
+    "post" | "setIsEditing" | "updateOptimisticPost"
+  >,
+) => {
+  const [error, formAction, isPending] = useActionState(
+    async (_prevState: any, formData: FormData) => {
+      props.updateOptimisticPost(formData);
+      const result = await updateItemAction(formData);
+      if (!result.success) {
+        return result.error;
+      }
+      props.setIsEditing(false);
+      return null;
+    },
+    null,
+  );
+  return (
+    <EditablePost
+      {...props}
+      error={error}
+      formAction={formAction}
+      isPending={isPending}
+    />
+  );
 };
 
 export default function EditablePost({

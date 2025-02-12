@@ -1,17 +1,15 @@
 "use client";
-
-import { useActionState, useOptimistic, useState } from "react";
+import { useOptimistic, useState } from "react";
 import { PostType } from "@/types";
-import EditablePost from "./editablePost";
+import EditablePost, { EditablePostForm } from "./editablePost";
 import DeletablePost from "./deletablePost";
 import Link from "next/link";
-import { updateItemAction } from "@/app/actions";
 
 type AllPostProps = {
   posts: PostType[];
 };
 
-export default async function AllPosts({ posts }: AllPostProps) {
+export default function AllPosts({ posts }: AllPostProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const [optimisticState, updateOptimistic] = useOptimistic(
@@ -26,23 +24,10 @@ export default async function AllPosts({ posts }: AllPostProps) {
               content: updatedPost.get("content") as string | null,
               published: (updatedPost.get("publish") as string) === "true",
             }
-          : item
+          : item,
       );
       return newArray;
-    }
-  );
-
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
-      updateOptimistic(formData);
-      const result = await updateItemAction(formData);
-      if (!result.success) {
-        return result.error;
-      }
-      setIsEditing(false);
-      return null;
     },
-    null
   );
 
   return (
@@ -61,13 +46,10 @@ export default async function AllPosts({ posts }: AllPostProps) {
                 {isEditing ? "Done" : "Edit"}
               </button>
               {isEditing ? (
-                <EditablePost
+                <EditablePostForm
                   post={post}
                   setIsEditing={setIsEditing}
                   updateOptimisticPost={updateOptimistic}
-                  error={error}
-                  formAction={formAction}
-                  isPending={isPending}
                 />
               ) : (
                 <DeletablePost post={post} />
