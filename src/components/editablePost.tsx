@@ -1,19 +1,27 @@
+// "use client";
+
 import { updateItemAction } from "@/app/actions";
-import prisma from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 import Form from "next/form";
-import { useActionState, useTransition } from "react";
+import { useActionState } from "react";
 import { PostType } from "@/types";
 import { SubmitButton } from "./submitButton";
 
 type EditablePostProps = {
   post: PostType;
   setIsEditing: (isEditing: boolean) => void;
+  updateOptimisticPost: (post: FormData) => void;
+  error: string | null | undefined;
+  formAction: (payload: FormData) => void;
+  isPending: boolean;
 };
 
 export default function EditablePost({
   post,
   setIsEditing,
+  updateOptimisticPost,
+  error,
+  formAction,
+  isPending,
 }: EditablePostProps) {
   // Before using useTransition
   // const [isPending, startTransition] = useTransition();
@@ -26,17 +34,19 @@ export default function EditablePost({
   // };
 
   // After using useActionState
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
-      const result = await updateItemAction(formData);
-      if (!result.success) {
-        return result.error;
-      }
-      setIsEditing(false);
-      return null;
-    },
-    null
-  );
+  // const [error, formAction, isPending] = useActionState(
+  //   async (_prevState: any, formData: FormData) => {
+  //     updateOptimisticPost(formData);
+  //     const result = await updateItemAction(formData);
+  //     if (!result.success) {
+  //       return result.error;
+  //     }
+  //     setIsEditing(false);
+  //     return null;
+  //   },
+  //   null
+  // );
+  // Moved to parent server component
 
   return (
     <Form action={formAction} className="">

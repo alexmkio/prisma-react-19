@@ -1,17 +1,11 @@
-"use client";
+// "use client";
 
 import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import XMark from "@/icons/xMark";
-import { Post, User } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import { deleteItemAction } from "@/app/actions";
+import { PostType } from "@/types";
 
-export default function DeletablePost({
-  post,
-}: {
-  post: Post & { author: User };
-}) {
+export default function DeletablePost({ post }: { post: PostType }) {
   const [deleteError, setDeleteError] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
 

@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Post as PostType, User as UserType } from "@prisma/client";
+import { useOptimistic, useState } from "react";
 import EditablePost from "./editablePost";
 import DeletablePost from "./deletablePost";
+import { PostType } from "@/types";
 
-export default function Post({
-  post,
-}: {
-  post: PostType & { author: UserType };
-}) {
+type PostProps = {
+  post: PostType;
+  updateOptimistic: (post: FormData) => void;
+};
+
+export default function Post({ post, updateOptimistic }: PostProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -20,7 +21,15 @@ export default function Post({
       <button onClick={() => setIsEditing(!isEditing)}>
         {isEditing ? "Done" : "Edit"}
       </button>
-      {isEditing ? <EditablePost post={post} setIsEditing={setIsEditing} /> : <DeletablePost post={post} />}
+      {isEditing ? (
+        <EditablePost
+          post={post}
+          setIsEditing={setIsEditing}
+          updateOptimisticPost={updateOptimistic}
+        />
+      ) : (
+        <DeletablePost post={post} />
+      )}
     </li>
   );
 }
