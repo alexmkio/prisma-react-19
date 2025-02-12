@@ -1,13 +1,7 @@
 "use client";
 
-import { useActionState, useOptimistic, useState } from "react";
+import { useOptimistic } from "react";
 import { PostType } from "@/types";
-import EditablePost from "./postEditor";
-import DeletablePost from "./postDisplay";
-import Link from "next/link";
-import { updateItemAction } from "@/app/actions";
-import PostsDisplay from "./postDisplay";
-import PostsEditor from "./postEditor";
 import PostDisplay from "./postDisplay";
 import PostEditor from "./postEditor";
 
