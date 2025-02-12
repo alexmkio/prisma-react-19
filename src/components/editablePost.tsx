@@ -1,12 +1,13 @@
-import { Post, User } from "@prisma/client";
 import { updateItemAction } from "@/app/actions";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import Form from "next/form";
-import { useTransition } from "react";
+import { useActionState, useTransition } from "react";
+import { PostType } from "@/types";
+import { SubmitButton } from "./submitButton";
 
 type EditablePostProps = {
-  post: Post & { author: User };
+  post: PostType;
   setIsEditing: (isEditing: boolean) => void;
 };
 
@@ -14,18 +15,33 @@ export default function EditablePost({
   post,
   setIsEditing,
 }: EditablePostProps) {
-  const [isPending, startTransition] = useTransition();
+  // Before using useTransition
+  // const [isPending, startTransition] = useTransition();
 
-  const handleUpdate = (formData: FormData) => {
-    startTransition(async () => {
-      await updateItemAction(formData);
+  // const handleUpdate = (formData: FormData) => {
+  //   startTransition(async () => {
+  //     await updateItemAction(formData);
+  //     setIsEditing(false);
+  //   });
+  // };
+
+  // After using useActionState
+  const [error, formAction, isPending] = useActionState(
+    async (_prevState: any, formData: FormData) => {
+      const result = await updateItemAction(formData);
+      if (!result.success) {
+        return result.error;
+      }
       setIsEditing(false);
-    });
-  };
+      return null;
+    },
+    null
+  );
 
   return (
-    <Form action={handleUpdate} className="">
+    <Form action={formAction} className="">
       {isPending && <p>Updating...</p>}
+      {error && <p>{error}</p>}
       <input type="hidden" name="id" value={post.id} />
       <div>
         <label htmlFor="title" className="block text-lg mb-2">

@@ -12,19 +12,14 @@ export default function DeletablePost({
 }: {
   post: Post & { author: User };
 }) {
-  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = (postID: number) => {
     startTransition(async () => {
-      try {
-        await deleteItemAction(postID);
-      } catch (error: unknown) {
-        let errorMessage = "An error occurred while deleting the post.";
-        if (error instanceof Error) {
-          errorMessage = error.message;
-        }
-        setDeleteError(errorMessage);
+      const result = await deleteItemAction(postID);
+      if (!result.success) {
+        setDeleteError(result.error);
       }
     });
   };
