@@ -46,7 +46,7 @@ export default function PostDisplay({ item }: { item: PostType }) {
       key={item.id}
       className={clsx(
         "relative rounded-lg p-4 flex flex-col w-96",
-        isPending
+        isPending || item?.pending
           ? "bg-red-500 hover:bg-red-600"
           : "bg-gray-50 hover:bg-gray-100"
       )}
@@ -60,6 +60,7 @@ export default function PostDisplay({ item }: { item: PostType }) {
       </button>
       {isPending && <p className="text-white text-lg">Deleting...</p>}
       {error && <p>Error: {error}</p>}
+      {item?.pending && <p className="text-white text-lg">Update pending...</p>}
       <span className="text-sm text-gray-600">Author: {item.author.name}</span>
       <span className="font-semibold">Title: {item.title}</span>
       <span className="font-semibold">

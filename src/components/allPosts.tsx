@@ -21,6 +21,7 @@ export default function AllPosts({ posts }: AllPostProps) {
               title: updatedPost.get("title") as string,
               content: updatedPost.get("content") as string | null,
               published: (updatedPost.get("publish") as string) === "true",
+              pending: true,
             }
           : item
       );
