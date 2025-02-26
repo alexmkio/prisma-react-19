@@ -14,7 +14,7 @@ export default function PostEditor({
   item,
   updateOptimistic,
 }: EditablePostProps) {
-  // Before using useTransition
+  // Before, using useTransition
   // const [isPending, startTransition] = useTransition();
 
   // const handleUpdate = (formData: FormData) => {
@@ -45,7 +45,7 @@ export default function PostEditor({
           : "bg-gray-50 hover:bg-gray-100"
       )}
     >
-      <Form action={formAction} className="">
+      <Form action={formAction}>
         {isPending && <p className="text-white text-lg">Updating...</p>}
         {error && <p>{error}</p>}
         <input type="hidden" name="id" value={item?.id} />
