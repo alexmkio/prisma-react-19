@@ -5,6 +5,7 @@ import { PostType } from "@/types";
 import Link from "next/link";
 import clsx from "clsx";
 import Form from "next/form";
+import { SubmitButton } from "./submitButton";
 
 export default function PostDisplay({ item }: { item: PostType }) {
   const [error, formAction, isPending] = useActionState(
@@ -34,9 +35,9 @@ export default function PostDisplay({ item }: { item: PostType }) {
         className="absolute top-0 right-0 p-4 flex items-center gap-1 text-black"
       >
         <input type="hidden" name="id" value={item?.id} />
-        <button type="submit" disabled={isPending}>
-          Delete <XMark className="size-6" />
-        </button>
+        <SubmitButton loadingText="Deleting..." defaultText="Delete">
+          <XMark className="size-6" />
+        </SubmitButton>
       </Form>
       {isPending && <p className="text-white text-lg">Deleting...</p>}
       {error && <p>Error: {error}</p>}
