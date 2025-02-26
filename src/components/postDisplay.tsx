@@ -7,9 +7,13 @@ import clsx from "clsx";
 import Form from "next/form";
 import { SubmitButton } from "./submitButton";
 
-export default function PostDisplay({ item }: { item: PostType }) {
+type PostDisplayProps = {
+  item: PostType;
+};
+
+export default function PostDisplay({ item }: PostDisplayProps) {
   const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
+    async (_prevState: string | null, formData: FormData) => {
       const postID = Number(formData.get("id"));
       const result = await deleteItemAction(postID);
       if (!result.success) {

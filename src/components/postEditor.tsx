@@ -5,7 +5,7 @@ import { PostType } from "@/types";
 import { SubmitButton } from "./submitButton";
 import clsx from "clsx";
 
-type EditablePostProps = {
+type PostEditorProps = {
   item: PostType;
   updateOptimistic: (post: FormData) => void;
 };
@@ -13,18 +13,9 @@ type EditablePostProps = {
 export default function PostEditor({
   item,
   updateOptimistic,
-}: EditablePostProps) {
-  // Before, using useTransition
-  // const [isPending, startTransition] = useTransition();
-
-  // const handleUpdate = (formData: FormData) => {
-  //   startTransition(async () => {
-  //     await updateItemAction(formData);
-  //   });
-  // };
-
+}: PostEditorProps) {
   const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
+    async (_prevState: string | null, formData: FormData) => {
       updateOptimistic(formData);
       const result = await updateItemAction(formData);
       if (!result.success) {

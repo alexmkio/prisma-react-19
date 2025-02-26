@@ -6,30 +6,8 @@ import { useActionState } from "react";
 import { SubmitButton } from "./submitButton";
 
 export default function PostCreator() {
-  // Unlike FormPost (a client component), I can do this here since this is a server component.
-  // async function createPost(formData: FormData) {
-  //   "use server";
-
-  //   const title = formData.get("title") as string;
-  //   const content = formData.get("content") as string;
-  //   const published = formData.get("publish") as string;
-
-  //   await prisma.post.create({
-  //     data: {
-  //       title,
-  //       content,
-  //       authorId: 1,
-  //       published: published === "true",
-  //     },
-  //   });
-
-  //   revalidatePath("/");
-  //   revalidatePath("/posts");
-  // }
-
-  // After using useActionState
   const [error, formAction, isPending] = useActionState(
-    async (_prevState: any, formData: FormData) => {
+    async (_prevState: string | null, formData: FormData) => {
       const result = await createItemAction(formData);
       if (!result.success) {
         return result.error;
