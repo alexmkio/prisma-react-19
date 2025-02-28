@@ -6,13 +6,13 @@ import { useActionState } from "react";
 import { SubmitButton } from "./submitButton";
 
 export default function PostCreator() {
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: string | null, formData: FormData) => {
-      const result = await createItemAction(formData);
-      if (!result.success) {
-        return result.error;
-      }
-      return null;
+  const [state, formAction, isPending] = useActionState(
+    async (
+      _prevState: { success: boolean; error: null | string } | null,
+      formData: FormData
+    ) => {
+      const data = await createItemAction(formData);
+      return data;
     },
     null
   );
@@ -23,7 +23,7 @@ export default function PostCreator() {
         Create
       </h1>
       {isPending && <p className="text-lg text-red-600">Creating...</p>}
-      {error && <p>{error}</p>}
+      {!state?.success && <p>{state?.error}</p>}
       <Form action={formAction} className="max-w-2xl space-y-6">
         <div>
           <label htmlFor="title" className="block text-lg mb-2">

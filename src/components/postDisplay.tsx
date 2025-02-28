@@ -12,14 +12,14 @@ type PostDisplayProps = {
 };
 
 export default function PostDisplay({ item }: PostDisplayProps) {
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: string | null, formData: FormData) => {
+  const [state, formAction, isPending] = useActionState(
+    async (
+      _prevState: { success: boolean; error: null | string } | null,
+      formData: FormData
+    ) => {
       const postID = Number(formData.get("id"));
-      const result = await deleteItemAction(postID);
-      if (!result.success) {
-        return result.error;
-      }
-      return null;
+      const data = await deleteItemAction(postID);
+      return data;
     },
     null
   );
@@ -44,7 +44,7 @@ export default function PostDisplay({ item }: PostDisplayProps) {
         </SubmitButton>
       </Form>
       {isPending && <p className="text-white text-lg">Deleting...</p>}
-      {error && <p>Error: {error}</p>}
+      {!state?.success && <p>Error: {state?.error}</p>}
       {item?.pending && <p className="text-white text-lg">Update pending...</p>}
       <span className="text-sm text-gray-600">Author: {item.author.name}</span>
       <span className="font-semibold">Title: {item.title}</span>

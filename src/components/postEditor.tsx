@@ -14,14 +14,14 @@ export default function PostEditor({
   item,
   updateOptimistic,
 }: PostEditorProps) {
-  const [error, formAction, isPending] = useActionState(
-    async (_prevState: string | null, formData: FormData) => {
+  const [state, formAction, isPending] = useActionState(
+    async (
+      _prevState: { success: boolean; error: null | string } | null,
+      formData: FormData
+    ) => {
       updateOptimistic(formData);
-      const result = await updateItemAction(formData);
-      if (!result.success) {
-        return result.error;
-      }
-      return null;
+      const data = await updateItemAction(formData);
+      return data;
     },
     null
   );
@@ -38,7 +38,7 @@ export default function PostEditor({
     >
       <Form action={formAction}>
         {isPending && <p className="text-white text-lg">Updating...</p>}
-        {error && <p>{error}</p>}
+        {!state?.success && <p>{state?.error}</p>}
         <input type="hidden" name="id" value={item?.id} />
         <div>
           <label htmlFor="title" className="block text-lg mb-2">
