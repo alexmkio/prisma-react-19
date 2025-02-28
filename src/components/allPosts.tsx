@@ -1,15 +1,17 @@
 "use client";
 
-import { useOptimistic } from "react";
+import { use, useOptimistic } from "react";
 import { PostType } from "@/types";
 import PostDisplay from "./postDisplay";
 import PostEditor from "./postEditor";
 
 type AllPostProps = {
-  posts: PostType[];
+  postsPromise: Promise<PostType[]>;
 };
 
-export default function AllPosts({ posts }: AllPostProps) {
+export default function AllPosts({ postsPromise }: AllPostProps) {
+  const posts = use(postsPromise);
+
   const [optimisticState, updateOptimistic] = useOptimistic(
     posts,
     (state, updatedPost: FormData) => {
