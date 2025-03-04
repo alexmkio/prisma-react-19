@@ -1,6 +1,6 @@
 import { useActionState } from "react";
 import XMark from "@/icons/xMark";
-import { deleteItemAction } from "@/app/actions";
+import { deleteItem } from "@/app/actions";
 import { PostType } from "@/types";
 import Link from "next/link";
 import clsx from "clsx";
@@ -12,17 +12,7 @@ type PostDisplayProps = {
 };
 
 export default function PostDisplay({ item }: PostDisplayProps) {
-  const [state, formAction, isPending] = useActionState(
-    async (
-      _prevState: { success: boolean; error: null | string } | null,
-      formData: FormData
-    ) => {
-      const postID = Number(formData.get("id"));
-      const data = await deleteItemAction(postID);
-      return data;
-    },
-    null
-  );
+  const [state, formAction, isPending] = useActionState(deleteItem, null);
 
   return (
     <li
@@ -44,7 +34,7 @@ export default function PostDisplay({ item }: PostDisplayProps) {
         </SubmitButton>
       </Form>
       {isPending && <p className="text-white text-lg">Deleting...</p>}
-      {!state?.success && <p>Error: {state?.error}</p>}
+      {isPending && !state?.success && <p>Error: {state?.error}</p>}
       {item?.pending && <p className="text-white text-lg">Update pending...</p>}
       <span className="text-sm text-gray-600">Author: {item.author.name}</span>
       <span className="font-semibold">Title: {item.title}</span>

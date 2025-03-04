@@ -1,4 +1,4 @@
-import { updateItemAction } from "@/app/actions";
+import { updateItem } from "@/app/actions";
 import Form from "next/form";
 import { useActionState } from "react";
 import { PostType } from "@/types";
@@ -20,7 +20,7 @@ export default function PostEditor({
       formData: FormData
     ) => {
       updateOptimistic(formData);
-      const data = await updateItemAction(formData);
+      const data = await updateItem(formData);
       return data;
     },
     null
