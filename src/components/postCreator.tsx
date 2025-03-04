@@ -1,21 +1,12 @@
 "use client";
 
 import Form from "next/form";
-import { createItemAction } from "@/app/actions";
+import { createItem } from "@/app/actions";
 import { useActionState } from "react";
 import { SubmitButton } from "./submitButton";
 
 export default function PostCreator() {
-  const [state, formAction, isPending] = useActionState(
-    async (
-      _prevState: { success: boolean; error: null | string } | null,
-      formData: FormData
-    ) => {
-      const data = await createItemAction(formData);
-      return data;
-    },
-    null
-  );
+  const [state, formAction, isPending] = useActionState(createItem, null);
 
   return (
     <div className="mx-auto max-w-[1500px] p-4">

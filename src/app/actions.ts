@@ -3,7 +3,10 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function createItemAction(formData: FormData) {
+export async function createItem(
+  _prevState: { success: boolean; error: null | string } | null,
+  formData: FormData
+) {
   try {
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
@@ -28,7 +31,7 @@ export async function createItemAction(formData: FormData) {
   }
 }
 
-export async function updateItemAction(formData: FormData) {
+export async function updateItem(formData: FormData) {
   try {
     const id = Number(formData.get("id"));
     const title = formData.get("title") as string;
@@ -56,8 +59,12 @@ export async function updateItemAction(formData: FormData) {
   }
 }
 
-export async function deleteItemAction(id: number) {
+export async function deleteItem(
+  _prevState: { success: boolean; error: null | string } | null,
+  formData: FormData
+) {
   try {
+    const id = Number(formData.get("id"));
     await prisma.post.delete({
       where: {
         id,
