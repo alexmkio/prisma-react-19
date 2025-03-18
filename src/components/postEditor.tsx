@@ -93,7 +93,7 @@ export default function PostEditor({
         </div>
         <SubmitButton
           className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
-          loadingText="Updating..."
+          pendingText="Updating..."
           defaultText="Update"
         />
       </Form>

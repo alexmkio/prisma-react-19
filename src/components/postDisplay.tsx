@@ -29,7 +29,7 @@ export default function PostDisplay({ item }: PostDisplayProps) {
         className="absolute top-0 right-0 p-4 flex items-center gap-1 text-black"
       >
         <input type="hidden" name="id" value={item?.id} />
-        <SubmitButton loadingText="Deleting..." defaultText="Delete">
+        <SubmitButton pendingText="Deleting..." defaultText="Delete">
           <XMark className="size-6" />
         </SubmitButton>
       </Form>

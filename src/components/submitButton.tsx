@@ -3,14 +3,14 @@ import { useFormStatus } from "react-dom";
 
 type SubmitButtonProps = {
   className?: string;
-  loadingText?: string;
+  pendingText?: string;
   defaultText?: string;
   children?: React.ReactNode;
 };
 
 export function SubmitButton({
   children,
-  loadingText = "Submitting...",
+  pendingText = "Submitting...",
   defaultText = "Submit",
   className = "",
 }: SubmitButtonProps) {
@@ -23,7 +23,7 @@ export function SubmitButton({
       className={clsx("flex gap-1 items-center justify-center", className)}
     >
       {children}
-      {pending ? loadingText : defaultText}
+      {pending ? pendingText : defaultText}
     </button>
   );
 }
