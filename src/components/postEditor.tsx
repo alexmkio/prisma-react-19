@@ -38,7 +38,7 @@ export default function PostEditor({
     >
       <Form action={formAction}>
         {isPending && <p className="text-white text-lg">Updating...</p>}
-        {!state?.success && <p>{state?.error}</p>}
+        {state?.success === false && <p>{state?.error}</p>}
         <input type="hidden" name="id" value={item?.id} />
         <div>
           <label htmlFor="title" className="block text-lg mb-2">

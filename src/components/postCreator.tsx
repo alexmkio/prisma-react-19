@@ -14,7 +14,7 @@ export default function PostCreator() {
         Create
       </h1>
       {isPending && <p className="text-lg text-red-600">Creating...</p>}
-      {!state?.success && <p>{state?.error}</p>}
+      {state?.success === false && <p>{state?.error}</p>}
       <Form action={formAction} className="max-w-2xl space-y-6">
         <div>
           <label htmlFor="title" className="block text-lg mb-2">

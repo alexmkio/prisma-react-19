@@ -34,7 +34,7 @@ export default function PostDisplay({ item }: PostDisplayProps) {
         </SubmitButton>
       </Form>
       {isPending && <p className="text-white text-lg">Deleting...</p>}
-      {isPending && !state?.success && <p>Error: {state?.error}</p>}
+      {isPending && state?.success === false && <p>Error: {state?.error}</p>}
       {item?.pending && <p className="text-white text-lg">Update pending...</p>}
       <span className="text-sm text-gray-600">Author: {item.author.name}</span>
       <span className="font-semibold">Title: {item.title}</span>
