@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# React 19 demo
 
-## Getting Started
+This project utilizes Next.js 15, React 19, and a Prisma ORM in order to get hands on experience with some of the new features in React 19. It's deployed [here](https://prisma-next-omega.vercel.app/).
 
-First, run the development server:
+## Initial Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. ```npx create-next-app@latest```
+2. TypeScript? Yes\
+ESLint? Yes\
+Tailwind CSS? Yes\
+`src/` directory? Yes\
+App Router? Yes\
+Turbopack for `next dev`? No\
+Customize the import alias (`@/*` by default)? No
+3. Follow [this guide](https://www.prisma.io/docs/guides/nextjs)
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [React 19 release](https://react.dev/blog/2024/12/05/react-19) - React blog
+- [What's new in React 19 | Lydia Hallie](https://www.youtube.com/watch?v=AJOGzVygGcY) - YouTube
+- [Next.js 15 release blog post](https://nextjs.org/blog/next-15) - Next.js blog
+- [Next.js 15 Breakdown (Everything You Need To Know) - Web Dev Simplified](https://www.youtube.com/watch?v=fqabW3WRUbw) - YouTube
+- [Prisma ORM docs](https://www.prisma.io/docs/orm) - Prisma docs
+- [How to use Prisma ORM with Next.js](https://www.prisma.io/docs/guides/nextjs) - Prisma docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributors
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This application was built by [Alex Kio](https://www.linkedin.com/in/alexkio/); a Front End Engineer at [Rightpoint](https://www.rightpoint.com/).
