@@ -1,6 +1,6 @@
 # React 19 demo
 
-This project utilizes Next.js 15, React 19, and a Prisma ORM in order to get hands on experience with some of the new features in React 19. It's deployed [here](https://prisma-next-omega.vercel.app/). [Video walkthrough](https://youtu.be/X-D0pYz3m84)
+This project utilizes Next.js 15, React 19, and a Prisma ORM in order to get hands on experience with some of the new features in React 19. It's deployed [here](https://prisma-next-omega.vercel.app/). Video walkthrough [here](https://youtu.be/X-D0pYz3m84).
 
 ## Initial Setup
 
